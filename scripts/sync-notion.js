@@ -7,7 +7,7 @@ const notion = new Client({
 });
 
 const ROOT_PAGE_ID = process.env.NOTION_PARENT_ID;
-const DOCS_DIR = path.resolve("docs");
+const DOCS_DIR = path.resolve("documents");
 
 const NOTION_VERSION = "2026-03-11";
 
