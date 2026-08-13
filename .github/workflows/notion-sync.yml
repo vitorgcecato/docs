@@ -4,32 +4,45 @@ on:
   push:
     branches:
       - main
-
+    paths:
+      - '**/*.md'
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   sync:
-    name: Sync Markdown to Notion
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: npm
+          node-version: '22'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install Dependencies
+        run: npm install
 
-      - name: Sync with Notion
-        run: node scripts/sync-notion.js
+      - name: Validar URLs nos arquivos Markdown
+        run: node scripts/validate-links.js
+
+      - name: Sync to Notion Database
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          NOTION_PARENT_ID: ${{ secrets.NOTION_PARENT_ID }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          NOTION_DATA_SOURCE_ID: ${{ secrets.NOTION_DATA_SOURCE_ID }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_BRANCH: ${{ github.ref_name }}
+        run: node scripts/sync-to-notion.js
+
+      - name: Commit Updated Metadata
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update notion sync state and changelog [skip ci]"

@@ -1,0 +1,72 @@
+name: Sync Docs to Notion
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**/*.md'
+  workflow_dispatch:
+    inputs:
+      force_full_sync:
+        description: 'Forçar Sincronização Completa (Ignorar Cache MD5)'
+        required: false
+        type: boolean
+        default: false
+      hard_rebase:
+        description: '⚠️ CUIDADO: HARD REBASE (Apaga TUDO e recria a documentação do zero no Notion)'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Validar URLs nos arquivos Markdown
+        run: node scripts/validate-links.js
+
+      - name: Sync to Notion Database
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          NOTION_DATA_SOURCE_ID: ${{ secrets.NOTION_DATA_SOURCE_ID }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_BRANCH: ${{ github.ref_name }}
+          FORCE_FULL_SYNC: ${{ github.event.inputs.force_full_sync }}
+          HARD_REBASE: ${{ github.event.inputs.hard_rebase }}
+        run: |
+          MAX_ATTEMPTS=3
+          ATTEMPT=1
+          until node scripts/sync-to-notion.js; do
+            EXIT_CODE=$?
+            if [ $ATTEMPT -ge $MAX_ATTEMPTS ]; then
+              echo "❌ Sync falhou após $MAX_ATTEMPTS tentativas."
+              exit $EXIT_CODE
+            fi
+            echo "⚠️  Tentativa $ATTEMPT falhou (código $EXIT_CODE). Aguardando 30s antes de tentar novamente..."
+            sleep 30
+            ATTEMPT=$((ATTEMPT + 1))
+          done
+
+      - name: Commit Updated Metadata
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update notion sync state and changelog [skip ci]"
