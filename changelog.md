@@ -6,6 +6,67 @@ As entradas abaixo são geradas automaticamente sempre que a documentação é s
 
 ---
 
+## Sincronização: 2026-08-13 13:42:05 (UTC)
+
+### 🟡 Arquivos Atualizados
+- `documents/github | nix/01-estrutura-arquitetura.md`
+- `documents/github | nix/02-gerador-particulas-utils.md`
+- `documents/github | nix/03-componente-svg-butterfly-icon.md`
+- `documents/github | nix/04-componente-card-e-estilos.md`
+
+---
+
+## Sincronização: 2026-08-13 13:24:37 (UTC)
+
+### 🟢 Arquivos Criados
+- `documents/github | nix/00-introducao.md`
+- `documents/github | nix/01-estrutura-arquitetura.md`
+- `documents/github | nix/02-gerador-particulas-utils.md`
+- `documents/github | nix/03-componente-svg-butterfly-icon.md`
+- `documents/github | nix/04-componente-card-e-estilos.md`
+
+### 🔴 Arquivos Deletados
+- `documents/particulas/00-introducao.md`
+- `documents/particulas/01-estrutura-arquitetura.md`
+- `documents/particulas/02-gerador-particulas-utils.md`
+- `documents/particulas/03-componente-svg-butterfly-icon.md`
+- `documents/particulas/04-componente-card-e-estilos.md`
+
+---
+
+## Sincronização: 2026-08-13 13:23:00 (UTC)
+
+### 🟢 Arquivos Criados
+- `documents/particulas/00-introducao.md`
+- `documents/particulas/01-estrutura-arquitetura.md`
+- `documents/particulas/02-gerador-particulas-utils.md`
+- `documents/particulas/03-componente-svg-butterfly-icon.md`
+- `documents/particulas/04-componente-card-e-estilos.md`
+
+---
+
+## Sincronização: 2026-08-13 13:12:14 (UTC)
+
+### 🟢 Arquivos Criados
+- `documents/github | docs/00-introducao.md`
+
+### 🔴 Arquivos Deletados
+- `documents/github | docs/README.md`
+
+---
+
+## Sincronização: 2026-08-13 13:06:59 (UTC)
+
+### 🟢 Arquivos Criados
+- `documents/github | docs/01-visao-geral-arquitetura.md`
+- `documents/github | docs/02-github-actions-workflows.md`
+- `documents/github | docs/03-script-validacao-links.md`
+- `documents/github | docs/04-script-sincronizacao-notion.md`
+- `documents/github | docs/05-guia-passo-a-passo-replicacao.md`
+- `documents/github | docs/README.md`
+
+---
+
 ## Sincronização: 2026-08-13 12:11:57 (UTC)
 
 ### 🟢 Arquivos Criados

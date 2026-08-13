@@ -33,8 +33,14 @@ function getHash(content) {
   return crypto.createHash('md5').update(content).digest('hex');
 }
 
+function sortAlphabetically(files) {
+  return files.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+}
+
 function findMarkdownFiles(dir, fileList = []) {
-  const files = fs.readdirSync(dir).sort((a, b) => a.localeCompare(b));
+  const files = fs.readdirSync(dir);
+  sortAlphabetically(files);
+
   for (const file of files) {
     const filePath = path.join(dir, file);
     if (fs.statSync(filePath).isDirectory()) {
@@ -103,7 +109,7 @@ function chunkArray(array, size) {
 
 function getDocumentType(fileName) {
   const lower = fileName.toLowerCase();
-  if (lower === 'readme.md') return 'README';
+  if (lower === 'readme.md' || lower === '00-introducao.md') return 'README';
   if (lower === 'changelog.md' || lower === 'change-log.md') return 'Changelog';
   return 'Documento';
 }
@@ -123,7 +129,6 @@ async function ensurePageExists(relativePath, fileDir, fileName, retry = false) 
     
     const normalizedDir = fileDir.replace(/\\/g, '/');
     
-    // Se estiver dentro da pasta 'documents', extrai a categoria/subcategoria relativa a 'documents'
     let effectiveDir = normalizedDir;
     if (effectiveDir === 'documents' || effectiveDir.startsWith('documents/')) {
       effectiveDir = effectiveDir.replace(/^documents\/?/, '');
@@ -198,13 +203,11 @@ async function updatePageContent(relativePath, filePath, docsDir, notionPageId, 
   const fileDir = path.dirname(relativePath);
   let markdownBody = fs.readFileSync(filePath, 'utf8');
 
-  // Adiciona referência ao GitHub ao final se configurado
   const githubUrl = getGithubUrl(relativePath);
   if (githubUrl && !markdownBody.includes('Ver documento original no GitHub')) {
     markdownBody += `\n\n---\n\n> 🔗 [Ver documento original no GitHub](${githubUrl})`;
   }
 
-  // Regex para achar links e resolvê-los
   markdownBody = markdownBody.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
     if (/^https?:\/\//i.test(url) || /^mailto:/i.test(url)) {
       return match;
@@ -236,7 +239,6 @@ async function updatePageContent(relativePath, filePath, docsDir, notionPageId, 
   let blocks = markdownToBlocks(markdownBody);
   blocks = flattenDeepBlocks(blocks, 0);
 
-  // Embrulhamos todo o conteúdo dentro de um bloco 'synced_block' para permitir exclusão instantânea no futuro.
   const wrapperResponse = await notion.blocks.children.append({
     block_id: notionPageId,
     children: [
@@ -261,7 +263,6 @@ async function updatePageContent(relativePath, filePath, docsDir, notionPageId, 
     });
   }
 
-  // Atualiza metadados da página (última sincronização)
   try {
     await notion.pages.update({
       page_id: notionPageId,
@@ -283,12 +284,11 @@ async function processFiles() {
   const docsDir = path.join(__dirname, '..');
   const mdFilesAbsolute = findMarkdownFiles(docsDir);
   
-  const relativeFiles = mdFilesAbsolute.map(f => path.relative(docsDir, f)).sort((a, b) => a.localeCompare(b));
+  const relativeFiles = sortAlphabetically(mdFilesAbsolute.map(f => path.relative(docsDir, f)));
   const localFiles = new Set(relativeFiles);
 
   const changelog = { deleted: [], created: [], updated: [] };
 
-  // Hard Rebase: limpa todas as páginas do Notion se solicitado
   if (process.env.HARD_REBASE === 'true') {
     console.log('--- ⚠️ INICIANDO HARD REBASE (LIMPANDO NOTION) ---');
     let hasMore = true;
@@ -313,7 +313,6 @@ async function processFiles() {
     fs.writeFileSync(stateFile, JSON.stringify(state, null, 2), 'utf8');
   }
 
-  // Passo 0: Exclusões
   for (const relativePath of Object.keys(state.files)) {
     if (!localFiles.has(relativePath)) {
       console.log(`[DELETANDO] Arquivo não encontrado localmente. Arquivando no Notion: ${relativePath}`);
@@ -333,7 +332,6 @@ async function processFiles() {
     }
   }
 
-  // Passo 1: Garantir que todas as páginas existam no Notion
   console.log('\n--- FASE 1: VERIFICANDO E CRIANDO PÁGINAS NO NOTION ---');
   for (const relativePath of localFiles) {
     const filePath = path.join(docsDir, relativePath);
@@ -348,7 +346,6 @@ async function processFiles() {
     }
   }
 
-  // Passo 2: Sincronizar conteúdo
   console.log('\n--- FASE 2: SINCRONIZANDO CONTEÚDO E LINKS ---');
   let modifiedCount = 0;
   let failedFiles = [];
@@ -378,7 +375,6 @@ async function processFiles() {
     }
   }
 
-  // Geração do Changelog
   if (changelog.created.length > 0 || changelog.updated.length > 0 || changelog.deleted.length > 0) {
     const changelogPath = path.join(docsDir, 'changelog.md');
 
@@ -394,17 +390,17 @@ async function processFiles() {
 
     if (changelog.created.length > 0) {
       block += `### 🟢 Arquivos Criados\n`;
-      changelog.created.forEach(f => block += `- \`${f}\`\n`);
+      sortAlphabetically(changelog.created).forEach(f => block += `- \`${f}\`\n`);
       block += `\n`;
     }
     if (changelog.updated.length > 0) {
       block += `### 🟡 Arquivos Atualizados\n`;
-      changelog.updated.forEach(f => block += `- \`${f}\`\n`);
+      sortAlphabetically(changelog.updated).forEach(f => block += `- \`${f}\`\n`);
       block += `\n`;
     }
     if (changelog.deleted.length > 0) {
       block += `### 🔴 Arquivos Deletados\n`;
-      changelog.deleted.forEach(f => block += `- \`${f}\`\n`);
+      sortAlphabetically(changelog.deleted).forEach(f => block += `- \`${f}\`\n`);
       block += `\n`;
     }
 

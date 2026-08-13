@@ -2,10 +2,32 @@
   "folders": {},
   "files": {
     "changelog.md": "3bbe9806-50d5-81ef-9935-d43065524d95",
-    "README.md": "3bbe9806-50d5-815d-8ee0-f138f24c2372"
+    "README.md": "3bbe9806-50d5-815d-8ee0-f138f24c2372",
+    "documents/github | docs/01-visao-geral-arquitetura.md": "3bbe9806-50d5-8150-9e1f-e76239217ffd",
+    "documents/github | docs/02-github-actions-workflows.md": "3bbe9806-50d5-816c-b161-d5617bea3035",
+    "documents/github | docs/03-script-validacao-links.md": "3bbe9806-50d5-81e8-b3f7-d5f9201ffc11",
+    "documents/github | docs/04-script-sincronizacao-notion.md": "3bbe9806-50d5-8148-8852-c862b495931a",
+    "documents/github | docs/05-guia-passo-a-passo-replicacao.md": "3bbe9806-50d5-8108-87f9-ca5d20e96b46",
+    "documents/github | docs/00-introducao.md": "3bbe9806-50d5-81ad-bf26-d72a1933e2a1",
+    "documents/github | nix/00-introducao.md": "3bbe9806-50d5-81bb-bde4-e1ace463f6ab",
+    "documents/github | nix/01-estrutura-arquitetura.md": "3bbe9806-50d5-814f-90bf-efcc90a264aa",
+    "documents/github | nix/02-gerador-particulas-utils.md": "3bbe9806-50d5-81be-93a7-fde65ec0e7cc",
+    "documents/github | nix/03-componente-svg-butterfly-icon.md": "3bbe9806-50d5-81e7-b3cc-dbfa55399957",
+    "documents/github | nix/04-componente-card-e-estilos.md": "3bbe9806-50d5-81dd-870a-e834d42b86f8"
   },
   "hashes": {
-    "changelog.md": "356e038e03fba72930fdc36995fa7b5e",
-    "README.md": "67e4f5d896f226a224b4fb8145df9830"
+    "changelog.md": "aff81e05ce48ee4ec3fc710a73aa153b",
+    "README.md": "67e4f5d896f226a224b4fb8145df9830",
+    "documents/github | docs/01-visao-geral-arquitetura.md": "eb186e19308c7989a004af49256e96fa",
+    "documents/github | docs/02-github-actions-workflows.md": "21f49d87864e5d12b3cd8a4b72950495",
+    "documents/github | docs/03-script-validacao-links.md": "531af08b11ae50789f77c9c8b5cb8003",
+    "documents/github | docs/04-script-sincronizacao-notion.md": "1aff08d886dd6b3dc640b3665780e0fa",
+    "documents/github | docs/05-guia-passo-a-passo-replicacao.md": "c09d29bae52ef05b8bba8dd146c0e2f5",
+    "documents/github | docs/00-introducao.md": "515280809ad83b05738b82fbd0713b88",
+    "documents/github | nix/00-introducao.md": "31b4a59ce0bb26c5348d8c9dcba41a97",
+    "documents/github | nix/01-estrutura-arquitetura.md": "6f4a75e4a2dfef27652e1c9d4599e87c",
+    "documents/github | nix/02-gerador-particulas-utils.md": "890444ac13858ba149065bb0cb969bfe",
+    "documents/github | nix/03-componente-svg-butterfly-icon.md": "4202b92c3025e2ebc52c5b68c5fdff59",
+    "documents/github | nix/04-componente-card-e-estilos.md": "cf98066039a62d223478daf9318bb1f5"
   }
 }
