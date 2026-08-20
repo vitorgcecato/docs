@@ -6,6 +6,33 @@ As entradas abaixo são geradas automaticamente sempre que a documentação é s
 
 ---
 
+## Sincronização: 2026-08-20 14:08:16 (UTC)
+
+### 🟢 Arquivos Criados
+- `.gemini/rules/explicador-especialista.md`
+- `documents/github | palloma-ia/00-introducao.md`
+- `documents/github | palloma-ia/01-arquitetura-e-fluxo-dados.md`
+- `documents/github | palloma-ia/02-radar-codigos-incomuns-e-hacks.md`
+- `documents/github | palloma-ia/03-disseccao-assistente-ia-e-gemini.md`
+- `documents/github | palloma-ia/04-disseccao-expectativas-bncc.md`
+- `documents/github | palloma-ia/05-disseccao-login-home-sobrenos.md`
+- `documents/github | palloma-ia/06-glossario-didatico-universal.md`
+- `documents/github | projeto-gratidao/00-introducao.md`
+- `documents/github | projeto-gratidao/01-arquitetura-e-fluxo-dados.md`
+- `documents/github | projeto-gratidao/02-radar-codigos-incomuns-e-hacks.md`
+- `documents/github | projeto-gratidao/03-disseccao-backend-mvc-e-banco.md`
+- `documents/github | projeto-gratidao/04-disseccao-frontend-e-interfaces.md`
+- `documents/github | projeto-gratidao/05-glossario-didatico-universal.md`
+- `documents/github | projeto-historia/00-introducao.md`
+- `documents/github | projeto-historia/01-arquitetura-e-fluxo-dados.md`
+- `documents/github | projeto-historia/02-radar-codigos-incomuns-e-hacks.md`
+- `documents/github | projeto-historia/03-disseccao-componentes-core.md`
+- `documents/github | projeto-historia/04-disseccao-paginas-tematicas-e-rankings.md`
+- `documents/github | projeto-historia/05-glossario-didatico-universal.md`
+- `PROMPT_ESPECIALISTA.md`
+
+---
+
 ## Sincronização: 2026-08-13 13:42:05 (UTC)
 
 ### 🟡 Arquivos Atualizados
